@@ -17,7 +17,7 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 40%;
+            width: 30%; /* 検索窓の幅を30%に修正 */
             padding: 10px;
             margin-right: 10px;
             box-sizing: border-box;
@@ -101,10 +101,13 @@
 
     <div id="searchLinks" class="search-links"></div>
 
-    <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
+    <p class="contact-text">不具合や意見などありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
 
-    <p class="update-time">最終更新日時: <span id="lastUpdated"></span></p>
+    <p class="update-time">最終更新日時: 2024年8月28日 </p>
+    <p>2024年8月28日更新内容：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました</p>
+
     <p class="shop-list">対象店舗: <span id="shopList"></span></p>
+    <p>※買取商店は技術的な理由により実装を見合わせています</p>
 
     <script>
         var sites = [
@@ -151,9 +154,6 @@
             // 矢印を表示
             document.getElementById('arrowDown').style.display = 'block';
 
-            // 検索実行時に更新日時を更新
-            updateLastUpdated();
-
             // スクロール位置を調整
             setTimeout(() => {
                 const arrowElement = document.getElementById('arrowDown');
@@ -167,22 +167,6 @@
             }, 100);
         }
 
-        function updateLastUpdated() {
-            var now = new Date();
-            var year = now.getFullYear();
-            var month = (now.getMonth() + 1).toString().padStart(2, '0');
-            var day = now.getDate().toString().padStart(2, '0');
-            var hours = now.getHours().toString().padStart(2, '0');
-            var minutes = now.getMinutes().toString().padStart(2, '0');
-            var seconds = now.getSeconds().toString().padStart(2, '0');
-            
-            var formattedDate = `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
-            var lastUpdatedElement = document.getElementById('lastUpdated');
-            if (lastUpdatedElement) {
-                lastUpdatedElement.textContent = formattedDate;
-            }
-        }
-
         function updateShopList() {
             var shopListElement = document.getElementById('shopList');
             if (shopListElement) {
@@ -190,9 +174,8 @@
             }
         }
 
-        // ページ読み込み時に更新日時を設定と対象店舗リストを表示
+        // ページ読み込み時に対象店舗リストを表示
         document.addEventListener('DOMContentLoaded', function() {
-            updateLastUpdated();
             updateShopList();
         });
     </script>
