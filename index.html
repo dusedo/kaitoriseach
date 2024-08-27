@@ -21,7 +21,7 @@
             padding: 10px;
             margin-right: 10px;
             box-sizing: border-box;
-            height: 45px; /* 検索ボタンと同じ高さに設定 */
+            height: 45px;
         }
         button {
             width: 25%;
@@ -31,7 +31,7 @@
             border: none;
             cursor: pointer;
             font-size: 1.2em;
-            height: 45px; /* 検索窓と同じ高さに設定 */
+            height: 45px;
             box-sizing: border-box;
         }
         button:hover {
@@ -51,9 +51,9 @@
             display: grid;
             grid-template-columns: 1fr 1fr;
             grid-template-rows: auto auto auto;
-            gap: 10px;
+            gap: 5px 10px; /* 縦方向の間隔を狭く */
             margin-top: 20px;
-            justify-content: start;
+            justify-content: center;
         }
         .search-link {
             padding: 10px;
@@ -62,50 +62,30 @@
             color: white;
             text-align: center;
             font-weight: bold;
-            width: 70%; /* ボタンの幅を狭く */
-            justify-self: center; /* 中央揃え */
+            width: 70%;
+            justify-self: center;
         }
         .search-link:nth-child(1) { background-color: #FF6B6B; }
         .search-link:nth-child(2) { background-color: #4ECDC4; }
         .search-link:nth-child(3) { background-color: #45B7D1; }
         .search-link:nth-child(4) { background-color: #FFA07A; }
         .search-link:nth-child(5) { 
-            background-color: #98D8C8; 
+            background-color: #2ecc71; /* 緑色に変更 */
+            color: white; /* 文字を白に */
             grid-column: 1 / span 2;
-            width: 35%; /* 他のボタンと同じ幅に */
+            width: 35%;
         }
         .arrow-down {
             text-align: left;
             font-size: 2em;
             margin-top: 10px;
             display: none;
-            padding-left: 6em; /* 全角6つ分左に移動 */
+            padding-left: 6em;
         }
     </style>
 </head>
 <body>
-    <h1>買取サイト同時検索ツール</h1>
-    
-    <h2>スマホ以外の商品検索</h2>
-    <div class="search-container">
-        <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANコードを入力してください">
-        <button onclick="search('non-smartphone')">検索</button>
-    </div>
-
-    <h2>スマホの商品検索</h2>
-    <div class="search-container">
-        <input type="text" id="smartphoneInput" placeholder="商品名を入力してください">
-        <button onclick="search('smartphone')">検索</button>
-    </div>
-
-    <div id="arrowDown" class="arrow-down">↓</div>
-
-    <div id="searchLinks" class="search-links"></div>
-
-    <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
-
-    <p class="update-time">最終更新日時: <span id="lastUpdated"></span></p>
-    <p class="shop-list">対象店舗: <span id="shopList"></span></p>
+    <!-- ... (前のボディ部分と同じ) ... -->
 
     <script>
         var sites = [
@@ -155,10 +135,17 @@
             // 検索実行時に更新日時を更新
             updateLastUpdated();
 
-            // 検索リンクまでスクロール
+            // スクロール位置を調整
             setTimeout(() => {
-                document.getElementById('arrowDown').scrollIntoView({ behavior: 'smooth', block: 'start' });
-            }, 90);
+                const arrowElement = document.getElementById('arrowDown');
+                const arrowRect = arrowElement.getBoundingClientRect();
+                const scrollTarget = window.pageYOffset + arrowRect.top - 100;
+
+                window.scrollTo({
+                    top: scrollTarget,
+                    behavior: 'smooth'
+                });
+            }, 100);
         }
 
         function updateLastUpdated() {
