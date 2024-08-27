@@ -17,7 +17,7 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 50%;
+            width: 66%;
             padding: 10px;
             margin-right: 10px;
         }
@@ -40,6 +40,12 @@
             font-style: italic;
             color: #666;
         }
+        #results {
+            margin-top: 20px;
+        }
+        .result-item {
+            margin-bottom: 10px;
+        }
     </style>
 </head>
 <body>
@@ -48,14 +54,16 @@
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANコードを入力してください">
-        <button onclick="searchNonSmartphone()">検索</button>
+        <button onclick="search('non-smartphone')">検索</button>
     </div>
 
     <h2>スマホの商品検索</h2>
     <div class="search-container">
         <input type="text" id="smartphoneInput" placeholder="商品名を入力してください">
-        <button onclick="searchSmartphone()">検索</button>
+        <button onclick="search('smartphone')">検索</button>
     </div>
+
+    <div id="results"></div>
 
     <h3>検索対象サイト</h3>
     <ul>
@@ -68,21 +76,44 @@
     <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
 
     <script>
-        function searchNonSmartphone() {
-            var query = document.getElementById('nonSmartphoneInput').value;
+        function search(type) {
+            var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
             if (!query) return;
-            window.open(`https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`, '_blank');
-            window.open(`https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`, '_blank');
-            window.open(`https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`, '_blank');
-            window.open(`https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`, '_blank');
-        }
-        function searchSmartphone() {
-            var query = document.getElementById('smartphoneInput').value;
-            if (!query) return;
-            window.open(`https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`, '_blank');
-            window.open(`https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`, '_blank');
-            window.open(`https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`, '_blank');
-            window.open(`https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`, '_blank');
+
+            var resultsDiv = document.getElementById('results');
+            resultsDiv.innerHTML = ''; // Clear previous results
+
+            var sites = [
+                {
+                    name: '買取1丁目',
+                    url: type === 'smartphone' 
+                        ? `https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`
+                        : `https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`
+                },
+                {
+                    name: '海峡通信',
+                    url: `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
+                },
+                {
+                    name: '買取ルデヤ',
+                    url: `https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`
+                },
+                {
+                    name: '買取Wiki',
+                    url: `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
+                }
+            ];
+
+            sites.forEach(site => {
+                var resultItem = document.createElement('div');
+                resultItem.className = 'result-item';
+                var link = document.createElement('a');
+                link.href = site.url;
+                link.target = '_blank';
+                link.textContent = `${site.name}で検索`;
+                resultItem.appendChild(link);
+                resultsDiv.appendChild(resultItem);
+            });
         }
     </script>
 </body>
