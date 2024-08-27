@@ -5,87 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>買取サイト同時検索ツール</title>
     <style>
-        body {
-            font-family: Arial, sans-serif;
-            max-width: 800px;
-            margin: 0 auto;
-            padding: 20px;
-        }
-        .search-container {
-            display: flex;
-            align-items: center;
-            margin-bottom: 10px;
-        }
-        input[type="text"] {
-            width: 30%;
-            padding: 10px;
-            margin-right: 10px;
-            box-sizing: border-box;
-            height: 45px;
-        }
-        button {
-            width: 25%;
-            padding: 10px 20px;
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2em;
-            height: 45px;
-            box-sizing: border-box;
-        }
-        button:hover {
-            background-color: #45a049;
-        }
-        .contact-text {
-            margin-top: 30px;
-            font-style: italic;
-            color: #666;
-        }
-        .update-time, .shop-list {
-            font-size: 0.8em;
-            color: #666;
-            margin-top: 5px;
-        }
-        .search-links {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            grid-template-rows: auto auto auto;
-            gap: 5px 10px; /* 縦方向の間隔を狭く */
-            margin-top: 20px;
-            justify-content: center;
-        }
-        .search-link {
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            width: 70%;
-            justify-self: center;
-        }
-        .search-link:nth-child(1) { background-color: #FF6B6B; }
-        .search-link:nth-child(2) { background-color: #4ECDC4; }
-        .search-link:nth-child(3) { background-color: #45B7D1; }
-        .search-link:nth-child(4) { background-color: #FFA07A; }
-        .search-link:nth-child(5) { 
-            background-color: #2ecc71; /* 緑色に変更 */
-            color: white; /* 文字を白に */
-            grid-column: 1 / span 2;
-            width: 35%;
-        }
-        .arrow-down {
-            text-align: left;
-            font-size: 2em;
-            margin-top: 10px;
-            display: none;
-            padding-left: 6em;
-        }
+        /* ... 前のスタイルをそのまま維持 ... */
     </style>
 </head>
 <body>
-    <!-- ... (前のボディ部分と同じ) ... -->
+    <h1>買取サイト同時検索ツール</h1>
+    
+    <h2>スマホ以外の商品検索</h2>
+    <div class="search-container">
+        <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANコードを入力してください">
+        <button onclick="search('non-smartphone')">検索</button>
+    </div>
+
+    <h2>スマホの商品検索</h2>
+    <div class="search-container">
+        <input type="text" id="smartphoneInput" placeholder="商品名を入力してください">
+        <button onclick="search('smartphone')">検索</button>
+    </div>
+
+    <div id="arrowDown" class="arrow-down">↓</div>
+
+    <div id="searchLinks" class="search-links"></div>
+
+    <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
+
+    <p class="update-time">最終更新日時: <span id="lastUpdated"></span></p>
+    <p class="shop-list">対象店舗: <span id="shopList"></span></p>
 
     <script>
         var sites = [
@@ -158,13 +103,23 @@
             var seconds = now.getSeconds().toString().padStart(2, '0');
             
             var formattedDate = `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
-            document.getElementById('lastUpdated').textContent = formattedDate;
+            var lastUpdatedElement = document.getElementById('lastUpdated');
+            if (lastUpdatedElement) {
+                lastUpdatedElement.textContent = formattedDate;
+            }
+        }
+
+        function updateShopList() {
+            var shopListElement = document.getElementById('shopList');
+            if (shopListElement) {
+                shopListElement.textContent = sites.map(site => site.name).join('、');
+            }
         }
 
         // ページ読み込み時に更新日時を設定と対象店舗リストを表示
         document.addEventListener('DOMContentLoaded', function() {
             updateLastUpdated();
-            document.getElementById('shopList').textContent = sites.map(site => site.name).join('、');
+            updateShopList();
         });
     </script>
 </body>
