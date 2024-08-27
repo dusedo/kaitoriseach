@@ -37,10 +37,10 @@
             font-style: italic;
             color: #666;
         }
-        .update-time {
+        .update-time, .shop-list {
             font-size: 0.8em;
             color: #666;
-            margin-top: 20px;
+            margin-top: 5px;
         }
         .search-links {
             display: grid;
@@ -56,7 +56,7 @@
             color: white;
             text-align: center;
             font-weight: bold;
-            width: 80%; /* ボタンの幅を狭く */
+            width: 80%;
         }
         .search-link:nth-child(1) { background-color: #FF6B6B; }
         .search-link:nth-child(2) { background-color: #4ECDC4; }
@@ -85,8 +85,34 @@
     <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
 
     <p class="update-time">最終更新日時: <span id="lastUpdated"></span></p>
+    <p class="shop-list">対象店舗: <span id="shopList"></span></p>
 
-    <script>
+     <script>
+        var sites = [
+            {
+                name: '買取1丁目',
+                url: (query, type) => type === 'smartphone' 
+                    ? `https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`
+                    : `https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`
+            },
+            {
+                name: '海峡通信',
+                url: query => `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
+            },
+            {
+                name: '買取ルデヤ',
+                url: query => `https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`
+            },
+            {
+                name: '買取Wiki',
+                url: query => `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
+            },
+            {
+                name: '森森買取',
+                url: query => `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
+            }
+        ];
+
         function search(type) {
             var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
             if (!query) return;
@@ -94,34 +120,9 @@
             var searchLinksDiv = document.getElementById('searchLinks');
             searchLinksDiv.innerHTML = ''; // Clear previous results
 
-            var sites = [
-                {
-                    name: '買取1丁目',
-                    url: type === 'smartphone' 
-                        ? `https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`
-                        : `https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`
-                },
-                {
-                    name: '海峡通信',
-                    url: `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
-                },
-                {
-                    name: '買取ルデヤ',
-                    url: `https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`
-                },
-                {
-                    name: '買取Wiki',
-                    url: `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
-                },
-                {
-                    name: '森森買取',
-                    url: `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
-                }
-            ];
-
             sites.forEach(site => {
                 var link = document.createElement('a');
-                link.href = site.url;
+                link.href = typeof site.url === 'function' ? site.url(query, type) : site.url;
                 link.target = '_blank';
                 link.textContent = `${site.name}で検索`;
                 link.className = 'search-link';
@@ -150,8 +151,9 @@
             document.getElementById('lastUpdated').textContent = formattedDate;
         }
 
-        // ページ読み込み時に更新日時を設定
+        // ページ読み込み時に更新日時を設定と対象店舗リストを表示
         updateLastUpdated();
+        document.getElementById('shopList').textContent = sites.map(site => site.name).join('、');
     </script>
 </body>
 </html>
