@@ -44,19 +44,25 @@
         }
         .search-links {
             display: grid;
-            grid-template-columns: 1fr 1fr;
+            grid-template-columns: repeat(3, 1fr);
             gap: 10px;
             margin-top: 20px;
             justify-content: start;
         }
         .search-link {
-            background-color: #f0f0f0;
             padding: 10px;
             border-radius: 5px;
             text-decoration: none;
-            color: #333;
+            color: white;
             text-align: center;
+            font-weight: bold;
+            width: 80%; /* ボタンの幅を狭く */
         }
+        .search-link:nth-child(1) { background-color: #FF6B6B; }
+        .search-link:nth-child(2) { background-color: #4ECDC4; }
+        .search-link:nth-child(3) { background-color: #45B7D1; }
+        .search-link:nth-child(4) { background-color: #FFA07A; }
+        .search-link:nth-child(5) { background-color: #98D8C8; }
     </style>
 </head>
 <body>
@@ -106,6 +112,10 @@
                 {
                     name: '買取Wiki',
                     url: `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
+                },
+                {
+                    name: '森森買取',
+                    url: `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
                 }
             ];
 
