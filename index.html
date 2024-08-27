@@ -1,0 +1,85 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>買取サイト同時検索ツール</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            max-width: 800px;
+            margin: 0 auto;
+            padding: 20px;
+        }
+        input[type="text"] {
+            width: 100%;
+            padding: 10px;
+            margin-bottom: 10px;
+        }
+        button {
+            padding: 10px 20px;
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+        }
+        button:hover {
+            background-color: #45a049;
+        }
+        ul {
+            margin-top: 20px;
+        }
+        .contact-text {
+            margin-top: 30px;
+            font-style: italic;
+            color: #666;
+        }
+    </style>
+</head>
+<body>
+    <h1>買取サイト同時検索ツール</h1>
+    
+    <h2>スマホ以外の商品検索</h2>
+    <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANコードを入力してください">
+    <button onclick="searchNonSmartphone()">検索</button>
+
+    <h2>スマホの商品検索</h2>
+    <input type="text" id="smartphoneInput" placeholder="商品名を入力してください">
+    <button onclick="searchSmartphone()">検索</button>
+
+    <h3>検索対象サイト</h3>
+    <ul>
+        <li>買取1丁目</li>
+        <li>海峡通信</li>
+        <li>買取商店</li>
+        <li>買取ルデヤ</li>
+        <li>買取Wiki</li>
+    </ul>
+
+    <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
+
+    <script>
+        function searchNonSmartphone() {
+            var query = document.getElementById('nonSmartphoneInput').value;
+            if (!query) return;
+
+            window.open(`https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`, '_blank');
+            window.open(`https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`, '_blank');
+            window.open('https://www.kaitorishouten-co.jp/', '_blank');
+            window.open(`https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`, '_blank');
+            window.open(`https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`, '_blank');
+        }
+
+        function searchSmartphone() {
+            var query = document.getElementById('smartphoneInput').value;
+            if (!query) return;
+
+            window.open(`https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`, '_blank');
+            window.open(`https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`, '_blank');
+            window.open('https://www.kaitorishouten-co.jp/', '_blank');
+            window.open(`https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`, '_blank');
+            window.open(`https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`, '_blank');
+        }
+    </script>
+</body>
+</html>
