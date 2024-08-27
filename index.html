@@ -17,7 +17,7 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 50%; /* 検索窓の幅を50%に修正 */
+            width: 40%; /* 検索窓の幅を40%に修正 */
             padding: 10px;
             margin-right: 10px;
         }
@@ -51,6 +51,19 @@
             color: #666;
             margin-top: 20px;
         }
+        .search-links {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 10px;
+            margin-top: 20px;
+        }
+        .search-link {
+            background-color: #f0f0f0;
+            padding: 10px;
+            border-radius: 5px;
+            text-decoration: none;
+            color: #333;
+        }
     </style>
 </head>
 <body>
@@ -68,7 +81,7 @@
         <button onclick="search('smartphone')">検索</button>
     </div>
 
-    <div id="results"></div>
+    <div id="searchLinks" class="search-links"></div>
 
     <h3>検索対象サイト</h3>
     <ul>
@@ -87,8 +100,8 @@
             var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
             if (!query) return;
 
-            var resultsDiv = document.getElementById('results');
-            resultsDiv.innerHTML = ''; // Clear previous results
+            var searchLinksDiv = document.getElementById('searchLinks');
+            searchLinksDiv.innerHTML = ''; // Clear previous results
 
             var sites = [
                 {
@@ -112,19 +125,33 @@
             ];
 
             sites.forEach(site => {
-                var resultItem = document.createElement('div');
-                resultItem.className = 'result-item';
                 var link = document.createElement('a');
                 link.href = site.url;
                 link.target = '_blank';
                 link.textContent = `${site.name}で検索`;
-                resultItem.appendChild(link);
-                resultsDiv.appendChild(resultItem);
+                link.className = 'search-link';
+                searchLinksDiv.appendChild(link);
             });
+
+            // 検索実行時に更新日時を更新
+            updateLastUpdated();
         }
 
-        // 最終更新日時を設定
-        document.getElementById('lastUpdated').textContent = '2024年8月27日';
+        function updateLastUpdated() {
+            var now = new Date();
+            var year = now.getFullYear();
+            var month = (now.getMonth() + 1).toString().padStart(2, '0');
+            var day = now.getDate().toString().padStart(2, '0');
+            var hours = now.getHours().toString().padStart(2, '0');
+            var minutes = now.getMinutes().toString().padStart(2, '0');
+            var seconds = now.getSeconds().toString().padStart(2, '0');
+            
+            var formattedDate = `${year}年${month}月${day}日 ${hours}:${minutes}:${seconds}`;
+            document.getElementById('lastUpdated').textContent = formattedDate;
+        }
+
+        // ページ読み込み時に更新日時を設定
+        updateLastUpdated();
     </script>
 </body>
 </html>
