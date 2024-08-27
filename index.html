@@ -17,7 +17,7 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 40%; /* 検索窓の幅を40%に修正 */
+            width: 40%;
             padding: 10px;
             margin-right: 10px;
         }
@@ -32,19 +32,10 @@
         button:hover {
             background-color: #45a049;
         }
-        ul {
-            margin-top: 20px;
-        }
         .contact-text {
             margin-top: 30px;
             font-style: italic;
             color: #666;
-        }
-        #results {
-            margin-top: 20px;
-        }
-        .result-item {
-            margin-bottom: 10px;
         }
         .update-time {
             font-size: 0.8em;
@@ -52,10 +43,11 @@
             margin-top: 20px;
         }
         .search-links {
-            display: flex;
-            flex-wrap: wrap;
+            display: grid;
+            grid-template-columns: 1fr 1fr;
             gap: 10px;
             margin-top: 20px;
+            justify-content: start;
         }
         .search-link {
             background-color: #f0f0f0;
@@ -63,6 +55,7 @@
             border-radius: 5px;
             text-decoration: none;
             color: #333;
+            text-align: center;
         }
     </style>
 </head>
@@ -82,14 +75,6 @@
     </div>
 
     <div id="searchLinks" class="search-links"></div>
-
-    <h3>検索対象サイト</h3>
-    <ul>
-        <li>買取1丁目</li>
-        <li>海峡通信</li>
-        <li>買取ルデヤ</li>
-        <li>買取Wiki</li>
-    </ul>
 
     <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
 
@@ -135,6 +120,11 @@
 
             // 検索実行時に更新日時を更新
             updateLastUpdated();
+
+            // 検索リンクまでスクロール
+            setTimeout(() => {
+                searchLinksDiv.scrollIntoView({ behavior: 'smooth', block: 'start' });
+            }, 100);
         }
 
         function updateLastUpdated() {
