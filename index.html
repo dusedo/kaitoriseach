@@ -17,17 +17,18 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 40%;
+            width: 30%;
             padding: 10px;
             margin-right: 10px;
         }
         button {
-            width: 30%;
+            width: 25%;
             padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
+            font-size: 1.2em; /* フォントサイズを大きく */
         }
         button:hover {
             background-color: #45a049;
@@ -44,7 +45,8 @@
         }
         .search-links {
             display: grid;
-            grid-template-columns: repeat(3, 1fr);
+            grid-template-columns: 1fr 1fr;
+            grid-template-rows: auto auto auto;
             gap: 10px;
             margin-top: 20px;
             justify-content: start;
@@ -62,7 +64,11 @@
         .search-link:nth-child(2) { background-color: #4ECDC4; }
         .search-link:nth-child(3) { background-color: #45B7D1; }
         .search-link:nth-child(4) { background-color: #FFA07A; }
-        .search-link:nth-child(5) { background-color: #98D8C8; }
+        .search-link:nth-child(5) { 
+            background-color: #98D8C8; 
+            grid-column: 1 / span 2; /* 5番目の要素を2列にまたがるように */
+            justify-self: center; /* 中央揃え */
+        }
     </style>
 </head>
 <body>
@@ -87,7 +93,7 @@
     <p class="update-time">最終更新日時: <span id="lastUpdated"></span></p>
     <p class="shop-list">対象店舗: <span id="shopList"></span></p>
 
-     <script>
+    <script>
         var sites = [
             {
                 name: '買取1丁目',
@@ -152,8 +158,10 @@
         }
 
         // ページ読み込み時に更新日時を設定と対象店舗リストを表示
-        updateLastUpdated();
-        document.getElementById('shopList').textContent = sites.map(site => site.name).join('、');
+        document.addEventListener('DOMContentLoaded', function() {
+            updateLastUpdated();
+            document.getElementById('shopList').textContent = sites.map(site => site.name).join('、');
+        });
     </script>
 </body>
 </html>
