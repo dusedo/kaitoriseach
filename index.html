@@ -6,7 +6,7 @@
     <title>買取サイト同時検索ツール</title>
     <style>
         body {
-            font-family: Arial, sans-serif;
+            font-family: 'メイリオ', 'Meiryo', sans-serif; /* 全体のフォントをメイリオに設定 */
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
@@ -17,7 +17,7 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 30%; /* 検索窓の幅を30%に修正 */
+            width: 20%; /* 検索窓の幅を20%に修正 */
             padding: 10px;
             margin-right: 10px;
             box-sizing: border-box;
@@ -37,14 +37,9 @@
         button:hover {
             background-color: #45a049;
         }
-        .contact-text {
-            margin-top: 30px;
-            font-style: italic;
-            color: #666;
-        }
-        .update-time, .shop-list {
-            font-size: 0.8em;
-            color: #666;
+        .text-standard {
+            font-size: 0.8em; /* サイズを統一 */
+            color: #666; /* カラーを統一 */
             margin-top: 5px;
         }
         .search-links {
@@ -101,13 +96,13 @@
 
     <div id="searchLinks" class="search-links"></div>
 
-    <p class="contact-text">不具合や意見などありましたら D <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
+    <p class="text-standard">最終更新日時: 2024年8月28日</p>
+    <p class="text-standard">2024年8月28日更新内容：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました</p>
 
-    <p class="update-time">最終更新日時: 2024年8月28日 </p>
-    <p>2024年8月28日更新内容：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました</p>
+    <p class="text-standard">対象店舗: 買取1丁目、海峡通信、買取ルデヤ、買取Wiki、森森買取</p>
+    <p class="text-standard">※買取商店は技術的な理由により実装を見合わせています</p>
 
-    <p class="shop-list">対象店舗: <span id="shopList"></span></p>
-    <p>※買取商店は技術的な理由により実装を見合わせています</p>
+    <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
 
     <script>
         var sites = [
