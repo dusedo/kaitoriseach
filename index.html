@@ -17,7 +17,7 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 66%;
+            width: 50%; /* 検索窓の幅を50%に修正 */
             padding: 10px;
             margin-right: 10px;
         }
@@ -45,6 +45,11 @@
         }
         .result-item {
             margin-bottom: 10px;
+        }
+        .update-time {
+            font-size: 0.8em;
+            color: #666;
+            margin-top: 20px;
         }
     </style>
 </head>
@@ -74,6 +79,8 @@
     </ul>
 
     <p class="contact-text">不具合がありましたら <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
+
+    <p class="update-time">最終更新日時: <span id="lastUpdated"></span></p>
 
     <script>
         function search(type) {
@@ -115,6 +122,9 @@
                 resultsDiv.appendChild(resultItem);
             });
         }
+
+        // 最終更新日時を設定
+        document.getElementById('lastUpdated').textContent = '2024年8月27日';
     </script>
 </body>
 </html>
