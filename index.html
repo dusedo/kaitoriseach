@@ -85,6 +85,8 @@
             z-index: 1000;
             width: 22%; /* 入力フィールドと同じ幅に設定 */
             display: none;
+            top: 100%; /* 入力フィールドのすぐ下に配置 */
+            left: 0;
         }
         .suggestions div {
             padding: 10px;
@@ -97,7 +99,7 @@
 </head>
 <body>
     <h1>買取サイト同時検索ツール</h1>
-    
+
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
@@ -120,7 +122,8 @@
     <br>
     <br>
     <p class="text-standard">最終更新日時： 2024年8月28日</p>
-    <p class="text-standard">更新内容：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました。検索履歴の表示機能を追加しました</p>
+    <p class="text-standard">更新内容　　：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました</p>
+    <p class="text-standard">　　　　　　　検索履歴の表示機能を追加しました　</p>
     <br>
     <br>
     <p class="text-standard">対象店舗: 買取1丁目、海峡通信、買取ルデヤ、買取Wiki、森森買取</p>
@@ -152,8 +155,8 @@
             }
         ];
 
-        // 検索履歴をローカルストレージから取得
-        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
+        // メモリ内で検索履歴を管理
+        let searchHistory = [];
 
         // サジェスト表示
         function showSuggestions(inputId) {
@@ -181,7 +184,8 @@
             const input = inputElement.value.toLowerCase();
             const suggestions = document.getElementById(inputId + "Suggestions");
             suggestions.innerHTML = '';
-            searchHistory.filter(item => item.toLowerCase().includes(input)).slice(-10).forEach(item => {
+            const filteredHistory = searchHistory.filter(item => item.toLowerCase().includes(input));
+            filteredHistory.slice(-10).forEach(item => {
                 const suggestionDiv = document.createElement('div');
                 suggestionDiv.textContent = item;
                 suggestionDiv.onclick = () => {
@@ -190,24 +194,19 @@
                 };
                 suggestions.appendChild(suggestionDiv);
             });
-            if (suggestions.innerHTML === '') {
-                suggestions.style.display = 'none';
-            } else {
-                suggestions.style.display = 'block';
-            }
+            suggestions.style.display = filteredHistory.length > 0 ? 'block' : 'none';
         }
 
         // 検索実行時に履歴を保存
-        document.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('blur', function() {
-                const value = this.value.trim();
-                if (value && !searchHistory.includes(value)) {
-                    searchHistory.push(value);
-                    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
+        function saveToHistory(value) {
+            value = value.trim();
+            if (value && !searchHistory.includes(value)) {
+                searchHistory.push(value);
+                if (searchHistory.length > 20) { // 履歴の最大数を20に制限
+                    searchHistory.shift();
                 }
-                document.getElementById(this.id + "Suggestions").style.display = 'none';
-            });
-        });
+            }
+        }
 
         // 検索窓外クリックでサジェストを非表示
         document.addEventListener('click', function(event) {
@@ -219,8 +218,11 @@
         });
 
         function search(type) {
-            var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
+            var inputId = type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput';
+            var query = document.getElementById(inputId).value;
             if (!query) return;
+
+            saveToHistory(query);
 
             var searchLinksDiv = document.getElementById('searchLinks');
             searchLinksDiv.innerHTML = ''; // Clear previous results
@@ -249,6 +251,13 @@
                 });
             }, 100);
         }
+
+        // 入力フィールドにイベントリスナーを追加
+        document.getElementById('smartphoneInput').addEventListener('input', () => filterSuggestions('smartphoneInput'));
+        document.getElementById('nonSmartphoneInput').addEventListener('input', () => filterSuggestions('nonSmartphoneInput'));
+
+        // 初期データをセットアップ（テスト用）
+        searchHistory = ['iPhone', 'MacBook', 'iPad', 'AirPods', 'Apple Watch'];
     </script>
 </body>
 </html>
