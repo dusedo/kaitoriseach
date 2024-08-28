@@ -154,11 +154,19 @@
         // 初期データをセットアップ（テスト用）
         let searchHistory = ['iPhone', 'MacBook', 'iPad', 'AirPods', 'Apple Watch'];
 
+        function debug(message) {
+            const debugInfo = document.getElementById('debugInfo');
+            debugInfo.textContent += message + '\n';
+            console.log(message);
+        }
+
         function showSuggestions(inputId) {
+            debug(`showSuggestions called for ${inputId}`);
             const inputElement = document.getElementById(inputId);
             const suggestions = document.getElementById(inputId + "Suggestions");
             suggestions.innerHTML = '';
             let recentHistory = searchHistory.slice(-10);
+            debug(`Recent history: ${JSON.stringify(recentHistory)}`);
             recentHistory.forEach(item => {
                 const suggestionDiv = document.createElement('div');
                 suggestionDiv.textContent = item;
@@ -170,15 +178,20 @@
             });
             if (recentHistory.length > 0) {
                 suggestions.style.display = 'block';
+                debug(`Suggestions should be visible for ${inputId}`);
+            } else {
+                debug(`No suggestions to show for ${inputId}`);
             }
         }
 
         function filterSuggestions(inputId) {
+            debug(`filterSuggestions called for ${inputId}`);
             const inputElement = document.getElementById(inputId);
             const input = inputElement.value.toLowerCase();
             const suggestions = document.getElementById(inputId + "Suggestions");
             suggestions.innerHTML = '';
             const filteredHistory = searchHistory.filter(item => item.toLowerCase().includes(input));
+            debug(`Filtered history: ${JSON.stringify(filteredHistory)}`);
             filteredHistory.slice(-10).forEach(item => {
                 const suggestionDiv = document.createElement('div');
                 suggestionDiv.textContent = item;
@@ -189,6 +202,7 @@
                 suggestions.appendChild(suggestionDiv);
             });
             suggestions.style.display = filteredHistory.length > 0 ? 'block' : 'none';
+            debug(`Suggestions display: ${suggestions.style.display}`);
         }
 
         function saveToHistory(value) {
@@ -198,6 +212,7 @@
                 if (searchHistory.length > 20) {
                     searchHistory.shift();
                 }
+                debug(`Added "${value}" to search history. Current history: ${JSON.stringify(searchHistory)}`);
             }
         }
 
@@ -233,12 +248,20 @@
             }, 100);
         }
 
-        // イベントリスナーの設定
+         // イベントリスナーの設定
         document.addEventListener('DOMContentLoaded', function() {
+            debug('DOMContentLoaded event fired');
             ['smartphoneInput', 'nonSmartphoneInput'].forEach(inputId => {
                 const input = document.getElementById(inputId);
-                input.addEventListener('focus', () => showSuggestions(inputId));
-                input.addEventListener('input', () => filterSuggestions(inputId));
+                input.addEventListener('focus', () => {
+                    debug(`Focus event on ${inputId}`);
+                    showSuggestions(inputId);
+                });
+                input.addEventListener('input', () => {
+                    debug(`Input event on ${inputId}`);
+                    filterSuggestions(inputId);
+                });
+                debug(`Event listeners added for ${inputId}`);
             });
 
             document.addEventListener('click', function(event) {
@@ -246,6 +269,7 @@
                     document.querySelectorAll('.suggestions').forEach(suggestion => {
                         suggestion.style.display = 'none';
                     });
+                    debug('Clicked outside search container, suggestions hidden');
                 }
             });
         });
