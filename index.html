@@ -217,73 +217,7 @@
             }
         ];
 
-        // 検索履歴をローカルストレージから取得
-        let searchHistory = JSON.parse(localStorage.getItem('searchHistory')) || [];
-
-        // サジェスト表示
-        function showSuggestions(inputId) {
-            const inputElement = document.getElementById(inputId);
-            const suggestions = document.getElementById(inputId + "Suggestions");
-            suggestions.innerHTML = '';
-            let recentHistory = searchHistory.slice(-10); // 最新の10件の履歴のみ表示
-            recentHistory.forEach(item => {
-                const suggestionDiv = document.createElement('div');
-                suggestionDiv.textContent = item;
-                suggestionDiv.onclick = () => {
-                    inputElement.value = item;
-                    suggestions.style.display = 'none';
-                };
-                suggestions.appendChild(suggestionDiv);
-            });
-            if (recentHistory.length > 0) {
-                suggestions.style.display = 'block';
-            }
-        }
-
-        // 入力に基づいてサジェストをフィルタリング
-        function filterSuggestions(inputId) {
-            const inputElement = document.getElementById(inputId);
-            const input = inputElement.value.toLowerCase();
-            const suggestions = document.getElementById(inputId + "Suggestions");
-            suggestions.innerHTML = '';
-            searchHistory.filter(item => item.toLowerCase().includes(input)).slice(-10).forEach(item => {
-                const suggestionDiv = document.createElement('div');
-                suggestionDiv.textContent = item;
-                suggestionDiv.onclick = () => {
-                    inputElement.value = item;
-                    suggestions.style.display = 'none';
-                };
-                suggestions.appendChild(suggestionDiv);
-            });
-            if (suggestions.innerHTML === '') {
-                suggestions.style.display = 'none';
-            } else {
-                suggestions.style.display = 'block';
-            }
-        }
-
-        // 検索実行時に履歴を保存
-        document.querySelectorAll('input[type="text"]').forEach(input => {
-            input.addEventListener('blur', function() {
-                const value = this.value.trim();
-                if (value && !searchHistory.includes(value)) {
-                    searchHistory.push(value);
-                    localStorage.setItem('searchHistory', JSON.stringify(searchHistory));
-                }
-                document.getElementById(this.id + "Suggestions").style.display = 'none';
-            });
-        });
-
-        // 検索窓外クリックでサジェストを非表示
-        document.addEventListener('click', function(event) {
-            if (!event.target.closest('.search-container')) {
-                document.querySelectorAll('.suggestions').forEach(suggestion => {
-                    suggestion.style.display = 'none';
-                });
-            }
-        });
-
-        function search(type) {
+       function search(type) {
             var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
             if (!query) return;
 
