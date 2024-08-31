@@ -408,7 +408,7 @@
             url: query => `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
         }
     ];
-        
+
    function search(type) {
         var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
         if (!query) return;
