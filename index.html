@@ -26,9 +26,8 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 60%;
+            width: 70%;
             padding: 10px;
-            margin-right: 10px;
             box-sizing: border-box;
             height: 45px;
         }
@@ -137,7 +136,6 @@
             -webkit-user-select: all;
         }
         .copy-button {
-            margin-left: 0.5em;
             padding: 2px 5px;
             background-color: #4CAF50;
             color: white;
@@ -172,17 +170,13 @@
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
-        <div id="nonSmartphoneSuggestions" class="suggestions"></div>
-        <button onclick="pasteContent('nonSmartphoneInput')">Paste</button>
-        <button onclick="search('non-smartphone')">検索</button>
+        <button onclick="pasteContent('nonSmartphoneInput')">Paste</button><button onclick="search('non-smartphone')">検索</button>
     </div>
 
     <h2>スマホの商品検索</h2>
     <div class="search-container">
         <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')">
-        <div id="smartphoneSuggestions" class="suggestions"></div>
-        <button onclick="pasteContent('smartphoneInput')">Paste</button>
-        <button onclick="search('smartphone')">検索</button>
+        <button onclick="pasteContent('smartphoneInput')">Paste</button><button onclick="search('smartphone')">検索</button>
     </div>
 
     <div id="arrowDown" class="arrow-down">↓</div>
@@ -212,7 +206,7 @@
                     <td data-label="商品名">PlayStation 5</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4948872415934</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4948872415934</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -220,7 +214,7 @@
                     <td data-label="商品名">PlayStation 5 デジタル</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4948872415910</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4948872415910</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -228,7 +222,7 @@
                     <td data-label="商品名">Nintendo Switch (有機ELモデル) [ホワイト]</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4902370548495</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4902370548495</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -236,7 +230,7 @@
                     <td data-label="商品名">Nintendo Switch (有機ELモデル) [ネオン]</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4902370548501</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4902370548501</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -244,7 +238,7 @@
                     <td data-label="商品名">Xbox Series X</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4549576161617</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4549576161617</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -252,7 +246,7 @@
                     <td data-label="商品名">Xbox Series S</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4549576167718</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4549576167718</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -260,7 +254,7 @@
                     <td data-label="商品名">リモートプレーヤー</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4948872017084</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4948872017084</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -268,7 +262,7 @@
                     <td data-label="商品名">It Takes Two</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4938833024404</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4938833024404</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -276,7 +270,7 @@
                     <td data-label="商品名">チェキ専用フィルム 2パック</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410377231</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410377231</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -284,7 +278,7 @@
                     <td data-label="商品名">チェキ専用フィルム 1パック</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410377224</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410377224</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -292,7 +286,7 @@
                     <td data-label="商品名">INSTAX mini 12 ブロッサムピンク</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410489125</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410489125</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -300,7 +294,7 @@
                     <td data-label="商品名">INSTAX mini 40</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410449341</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410449341</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -308,14 +302,15 @@
                     <td data-label="商品名">INSTAX mini Evo black</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410520088</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410520088</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
+                <tr>
                     <td data-label="商品名">INSTAX mini Evo brown</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410520125</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410520125</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -323,7 +318,7 @@
                     <td data-label="商品名">INSTAX WIDE 400</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410529975</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410529975</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -331,7 +326,7 @@
                     <td data-label="商品名">写ルンです シンプルエース 27枚撮り</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4547410369137</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4547410369137</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -339,7 +334,7 @@
                     <td data-label="商品名">SX740 HS シルバー</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4549292119060</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4549292119060</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -347,7 +342,7 @@
                     <td data-label="商品名">SX740 HS ブラック</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">4549292119008</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">4549292119008</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
@@ -355,7 +350,7 @@
                     <td data-label="商品名">Fire TV Stick 4K Max 第2世代</td>
                     <td data-label="JANコード">
                         <div class="copy-container">
-                            <span class="jan-code">0840268944841</span>　<button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                            <span class="jan-code">0840268944841</span><button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                         </div>
                     </td>
                 </tr>
