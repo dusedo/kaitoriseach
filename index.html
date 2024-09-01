@@ -27,25 +27,28 @@
             margin-bottom: 10px;
         }
         input[type="text"] {
-            width: 22%;
+            width: 60%;
             padding: 10px;
             margin-right: 10px;
             box-sizing: border-box;
             height: 45px;
         }
         button {
-            width: 20%;
-            padding: 10px 20px;
+            width: 10%;
+            padding: 10px;
             background-color: #4CAF50;
             color: white;
             border: none;
             cursor: pointer;
-            font-size: 1.2em;
+            font-size: 1em;
             height: 45px;
             box-sizing: border-box;
         }
         button:hover {
             background-color: #45a049;
+        }
+        .paste-button {
+            margin-right: 5px;
         }
         .text-standard {
             font-size: 0.8em;
@@ -154,23 +157,6 @@
         .copy-button:hover {
             background-color: #45a049;
         }
-        .paste-button {
-            background-color: #4CAF50;
-            color: white;
-            border: none;
-            cursor: pointer;
-            font-size: 1.2em;
-            height: 45px;
-            width: 45px;
-            margin-right: 10px;
-            box-sizing: border-box;
-            display: flex;
-            justify-content: center;
-            align-items: center;
-        }
-        .paste-button:hover {
-            background-color: #45a049;
-        }
         /* スマートフォン向けのスタイル調整 */
         @media (max-width: 600px) {
             .product-table td {
@@ -194,17 +180,17 @@
     
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
-        <button class="paste-button" onclick="pasteContent('nonSmartphoneInput')">📋</button>
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
         <div id="nonSmartphoneSuggestions" class="suggestions"></div>
+        <button class="paste-button" onclick="pasteContent('nonSmartphoneInput')">📋</button>
         <button onclick="search('non-smartphone')">検索</button>
     </div>
 
     <h2>スマホの商品検索</h2>
     <div class="search-container">
-        <button class="paste-button" onclick="pasteContent('smartphoneInput')">📋</button>
         <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')">
         <div id="smartphoneSuggestions" class="suggestions"></div>
+        <button class="paste-button" onclick="pasteContent('smartphoneInput')">📋</button>
         <button onclick="search('smartphone')">検索</button>
     </div>
 
@@ -340,4 +326,13 @@
                     </td>
                 </tr>
                 <tr>
-                    <td data-label
+                    <td data-label="商品名">INSTAX mini Evo black</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4547410520088</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">
