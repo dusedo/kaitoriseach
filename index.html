@@ -14,27 +14,34 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>買取金額検索ツール</title>
     <style>
-        body {
+        /* 全体のスタイル */
+        #body {
             font-family: 'メイリオ', 'Meiryo', sans-serif;
             max-width: 800px;
             margin: 0 auto;
             padding: 20px;
         }
-        .search-container {
+
+        /* 検索コンテナ */
+        #search-container {
             position: relative;
             display: flex;
             align-items: center;
             margin-bottom: 10px;
         }
-        input[type="text"] {
-            width: 60%;
+
+        /* 入力フィールド */
+        #input-text {
+            width: 50%; /* 幅を50%に変更 */
             padding: 10px;
             margin-right: 10px;
             box-sizing: border-box;
             height: 45px;
         }
-        button {
-            width: 5.5%;
+
+        /* ボタン */
+        #button, #paste-button {
+            width: 10%; /* ボタンの幅を広げる */
             padding: 10px;
             background-color: #4CAF50;
             color: white;
@@ -44,19 +51,20 @@
             height: 45px;
             box-sizing: border-box;
         }
-        button:hover {
+
+        #button:hover, #paste-button:hover {
             background-color: #45a049;
         }
-        .paste-button {
-            margin-right: 5px;
-            width: 5.5%;
-        }
-        .text-standard {
+
+        /* テキストスタイル */
+        #text-standard {
             font-size: 0.8em;
             color: #666;
             margin-top: 5px;
         }
-        .search-links {
+
+        /* 検索リンク */
+        #search-links {
             display: grid;
             grid-template-columns: repeat(2, auto);
             grid-template-rows: auto auto auto;
@@ -64,6 +72,8 @@
             margin-top: 20px;
             justify-content: start;
         }
+
+        /* 検索リンクのスタイル */
         .search-link {
             padding: 10px;
             border-radius: 5px;
@@ -74,21 +84,8 @@
             width: 150px;
             justify-self: start;
         }
-        .search-link:nth-child(1) { background-color: #FF6B6B; }
-        .search-link:nth-child(2) { background-color: #4ECDC4; }
-        .search-link:nth-child(3) { background-color: #45B7D1; }
-        .search-link:nth-child(4) { background-color: #FFA07A; }
-        .search-link:nth-child(5) { 
-            background-color: #2ecc71;
-            color: white;
-        }
-        .arrow-down {
-            text-align: left;
-            font-size: 2em;
-            margin-top: 10px;
-            display: none;
-            padding-left: 6em;
-        }
+
+        /* 提案リスト */
         .suggestions {
             border: 1px solid #ccc;
             max-height: 150px;
@@ -99,43 +96,53 @@
             width: 22%;
             display: none;
         }
+
         .suggestions div {
             padding: 10px;
             cursor: pointer;
         }
+
         .suggestions div:hover {
             background-color: #f0f0f0;
         }
-        .product-table {
+
+        /* 商品リストテーブル */
+        #product-table {
             width: 100%;
             border-collapse: collapse;
             margin-top: 20px;
         }
-        .product-table th, .product-table td {
+
+        #product-table th, #product-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
         }
-        .product-table th {
+
+        #product-table th {
             background-color: #f2f2f2;
             font-weight: bold;
         }
-        .product-table tr:nth-child(even) {
+
+        #product-table tr:nth-child(even) {
             background-color: #f9f9f9;
         }
-        .product-table tr:hover {
+
+        #product-table tr:hover {
             background-color: #f5f5f5;
         }
-        .product-list-heading {
-            font-size: 1.1em;
-            margin-bottom: 10px;
-            color: #333;
+
+        /* 商品名列とJANコード列のスタイル */
+        #product-table td[data-label="JANコード"] {
+            width: 150px; /* JANコード列を狭くする */
         }
+
         .copy-container {
             display: flex;
             align-items: stretch;
             height: 30px;
         }
+
         .jan-code {
             flex-grow: 1;
             display: flex;
@@ -145,6 +152,7 @@
             user-select: all;
             -webkit-user-select: all;
         }
+
         .copy-button {
             padding: 2px 5px;
             background-color: #4CAF50;
@@ -155,16 +163,18 @@
             height: 100%;
             margin-left: 0;
         }
+
         .copy-button:hover {
             background-color: #45a049;
         }
+
         /* スマートフォン向けのスタイル調整 */
         @media (max-width: 600px) {
-            .product-table td {
+            #product-table td {
                 display: block;
                 text-align: left;
             }
-            .product-table td:before {
+            #product-table td:before {
                 content: attr(data-label);
                 font-weight: bold;
                 display: block;
@@ -176,41 +186,41 @@
         }
     </style>
 </head>
-<body>
+<body id="body">
     <h1>買取サイト同時検索ツール</h1>
     
     <h2>スマホ以外の商品検索</h2>
-    <div class="search-container">
-        <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
+    <div class="search-container" id="search-container">
+        <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')" class="input-text">
         <div id="nonSmartphoneSuggestions" class="suggestions"></div>
-        <button class="paste-button" onclick="pasteContent('nonSmartphoneInput')">Paste</button>
-        <button onclick="search('non-smartphone')">検索</button>
+        <button class="paste-button" id="paste-button" onclick="pasteContent('nonSmartphoneInput')">Paste</button>
+        <button onclick="search('non-smartphone')" id="button">検索</button>
     </div>
 
     <h2>スマホの商品検索</h2>
-    <div class="search-container">
-        <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')">
+    <div class="search-container" id="search-container">
+        <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')" class="input-text">
         <div id="smartphoneSuggestions" class="suggestions"></div>
-        <button class="paste-button" onclick="pasteContent('smartphoneInput')">Paste</button>
-        <button onclick="search('smartphone')">検索</button>
+        <button class="paste-button" id="paste-button" onclick="pasteContent('smartphoneInput')">Paste</button>
+        <button onclick="search('smartphone')" id="button">検索</button>
     </div>
 
     <div id="arrowDown" class="arrow-down">↓</div>
 
     <div id="searchLinks" class="search-links"></div>
 
-    <p class="text-standard">不具合がありましたら D  <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
+    <p class="text-standard" id="text-standard">不具合がありましたら D  <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
     <br>
-    <p class="text-standard">最終更新日時： 2024年9月1日</p>
-    <p class="text-standard">2024年8月28日更新内容：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました。プレステ5などキーワードで検索しづらい商品があったので、JANリストを追加しました　</p>
-    <p class="text-standard">2024年9月1日更新内容：JANリストのJANを手動コピーするのが手間だったのでワンタップでコピーできるようにしました。デザインの乱れは近日中に修正します</p>
+    <p class="text-standard" id="text-standard">最終更新日時： 2024年9月1日</p>
+    <p class="text-standard" id="text-standard">2024年8月28日更新内容：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました。プレステ5などキーワードで検索しづらい商品があったので、JANリストを追加しました　</p>
+    <p class="text-standard" id="text-standard">2024年9月1日更新内容：JANリストのJANを手動コピーするのが手間だったのでワンタップでコピーできるようにしました。デザインの乱れは近日中に修正します</p>
     <br>
-    <p class="text-standard">対象店舗: 買取1丁目、海峡通信、買取ルデヤ、買取Wiki、森森買取</p>
-    <p class="text-standard">※買取商店は技術的な理由により実装を見合わせています</p>
+    <p class="text-standard" id="text-standard">対象店舗: 買取1丁目、海峡通信、買取ルデヤ、買取Wiki、森森買取</p>
+    <p class="text-standard" id="text-standard">※買取商店は技術的な理由により実装を見合わせています</p>
     <br>
     <div style="margin-top: 20px;">
         <h4 class="product-list-heading">参照 JANリスト（都度更新します）</h4>
-        <table class="product-table">
+        <table class="product-table" id="product-table">
             <thead>
                 <tr>
                     <th>商品名</th>
