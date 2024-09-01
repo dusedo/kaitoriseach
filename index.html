@@ -433,25 +433,31 @@
     }
 
     function pasteContent(inputId) {
-        if (navigator.clipboard && navigator.clipboard.readText) {
-            navigator.clipboard.readText()
-                .then(text => {
-                    document.getElementById(inputId).value = text;
-                })
-                .catch(err => {
-                    console.error('Failed to read clipboard contents: ', err);
-                    manualPaste(inputId);
-                });
-        } else {
-            manualPaste(inputId);
-        }
+    const input = document.getElementById(inputId);
+    
+    if (navigator.clipboard && navigator.clipboard.readText) {
+        navigator.clipboard.readText()
+            .then(text => {
+                input.value = text;
+            })
+            .catch(err => {
+                console.error('Clipboard read failed: ', err);
+                fallbackPaste(input);
+            });
+    } else {
+        fallbackPaste(input);
     }
+}
 
-    function manualPaste(inputId) {
-        var input = document.getElementById(inputId);
-        input.focus();
-        document.execCommand('paste');
+function fallbackPaste(input) {
+    input.focus();
+    input.select();
+    
+    const pasteSuccess = document.execCommand('paste');
+    if (!pasteSuccess) {
+        alert('ペーストに失敗しました。手動でペーストしてください。');
     }
+}
 </script>
 </body>
 </html>
