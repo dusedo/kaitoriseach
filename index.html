@@ -4,18 +4,17 @@
     <!-- Google tag (gtag.js) -->
     <script async src="https://www.googletagmanager.com/gtag/js?id=G-5CXRQSKLQQ"></script>
     <script>
-      window.dataLayer = window.dataLayer || [];
-      function gtag(){dataLayer.push(arguments);}
-      gtag('js', new Date());
-
-      gtag('config', 'G-5CXRQSKLQQ');
+        window.dataLayer = window.dataLayer || [];
+        function gtag(){dataLayer.push(arguments);}
+        gtag('js', new Date());
+        gtag('config', 'G-5CXRQSKLQQ');
     </script>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>買取金額検索ツール</title>
     <style>
         /* 全体のスタイル */
-        #body {
+        body {
             font-family: 'メイリオ', 'Meiryo', sans-serif;
             max-width: 800px;
             margin: 0 auto;
@@ -23,7 +22,7 @@
         }
 
         /* 検索コンテナ */
-        #search-container {
+        .search-container {
             position: relative;
             display: flex;
             align-items: center;
@@ -32,17 +31,16 @@
 
         /* 入力フィールド */
         input[type="text"] {
-            width: 50%; /* 幅を50%に変更 */
+            width: 60%;
             padding: 10px;
-            margin-right: 10px;
             box-sizing: border-box;
             height: 45px;
         }
 
         /* ボタン */
-        button {
-            width: 10%; /* ボタンの幅を広げる */
-            padding: 10px;
+        .paste-button, .search-button {
+            width: auto;
+            padding: 10px 20px;
             background-color: #4CAF50;
             color: white;
             border: none;
@@ -50,15 +48,11 @@
             font-size: 1em;
             height: 45px;
             box-sizing: border-box;
+            margin-left: 5px; /* ボタン間の空白 */
         }
 
-        button:hover {
+        .paste-button:hover, .search-button:hover {
             background-color: #45a049;
-        }
-
-        .paste-button {
-            margin-right: 5px;
-            width: 10%; /* Pasteボタンの幅 */
         }
 
         /* テキストスタイル */
@@ -66,49 +60,6 @@
             font-size: 0.8em;
             color: #666;
             margin-top: 5px;
-        }
-
-        /* 検索リンク */
-        .search-links {
-            display: grid;
-            grid-template-columns: repeat(2, auto);
-            grid-template-rows: auto auto auto;
-            gap: 5px;
-            margin-top: 20px;
-            justify-content: start;
-        }
-
-        /* 検索リンクのスタイル */
-        .search-link {
-            padding: 10px;
-            border-radius: 5px;
-            text-decoration: none;
-            color: white;
-            text-align: center;
-            font-weight: bold;
-            width: 150px;
-            justify-self: start;
-        }
-
-        /* 提案リスト */
-        .suggestions {
-            border: 1px solid #ccc;
-            max-height: 150px;
-            overflow-y: auto;
-            position: absolute;
-            background-color: white;
-            z-index: 1000;
-            width: 22%;
-            display: none;
-        }
-
-        .suggestions div {
-            padding: 10px;
-            cursor: pointer;
-        }
-
-        .suggestions div:hover {
-            background-color: #f0f0f0;
         }
 
         /* 商品リストテーブル */
@@ -137,14 +88,9 @@
             background-color: #f5f5f5;
         }
 
-        /* 商品名列とJANコード列のスタイル */
-        .product-table td[data-label="JANコード"] {
-            width: 150px; /* JANコード列を狭くする */
-        }
-
         .copy-container {
             display: flex;
-            align-items: stretch;
+            align-items: center;
             height: 30px;
         }
 
@@ -155,7 +101,6 @@
             padding: 0 5px;
             background-color: #f9f9f9;
             user-select: all;
-            -webkit-user-select: all;
         }
 
         .copy-button {
@@ -166,7 +111,7 @@
             cursor: pointer;
             font-size: 0.8em;
             height: 100%;
-            margin-left: 0;
+            margin-left: 5px;
         }
 
         .copy-button:hover {
@@ -191,25 +136,21 @@
         }
     </style>
 </head>
-<body id="body">
+<body>
     <h1>買取サイト同時検索ツール</h1>
     
-    <!-- スマホ以外の商品検索セクション -->
     <h2>スマホ以外の商品検索</h2>
-    <div class="search-container" id="search-container">
+    <div class="search-container">
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力">
-        <div id="nonSmartphoneSuggestions" class="suggestions"></div>
         <button class="paste-button" onclick="pasteContent('nonSmartphoneInput')">Paste</button>
-        <button onclick="search('non-smartphone')">検索</button>
+        <button class="search-button" onclick="search('non-smartphone')">検索</button>
     </div>
 
-    <!-- スマホの商品検索セクション -->
     <h2>スマホの商品検索</h2>
-    <div class="search-container" id="search-container">
+    <div class="search-container">
         <input type="text" id="smartphoneInput" placeholder="商品名を入力">
-        <div id="smartphoneSuggestions" class="suggestions"></div>
         <button class="paste-button" onclick="pasteContent('smartphoneInput')">Paste</button>
-        <button onclick="search('smartphone')">検索</button>
+        <button class="search-button" onclick="search('smartphone')">検索</button>
     </div>
 
     <div id="arrowDown" class="arrow-down">↓</div>
