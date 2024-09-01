@@ -129,12 +129,14 @@
         }
         .copy-container {
             display: flex;
-            align-items: center;
+            align-items: stretch;
+            height: 30px;
         }
         .jan-code {
-            border: 1px solid #ccc;
-            padding: 5px;
-            margin-right: 5px;
+            flex-grow: 1;
+            display: flex;
+            align-items: center;
+            padding: 0 5px;
             background-color: #f9f9f9;
             user-select: all;
             -webkit-user-select: all;
@@ -146,8 +148,27 @@
             border: none;
             cursor: pointer;
             font-size: 0.8em;
+            height: 100%;
+            margin-left: 0;
         }
         .copy-button:hover {
+            background-color: #45a049;
+        }
+        .paste-button {
+            background-color: #4CAF50;
+            color: white;
+            border: none;
+            cursor: pointer;
+            font-size: 1.2em;
+            height: 45px;
+            width: 45px;
+            margin-right: 10px;
+            box-sizing: border-box;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+        }
+        .paste-button:hover {
             background-color: #45a049;
         }
         /* スマートフォン向けのスタイル調整 */
@@ -173,6 +194,7 @@
     
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
+        <button class="paste-button" onclick="pasteContent('nonSmartphoneInput')">📋</button>
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
         <div id="nonSmartphoneSuggestions" class="suggestions"></div>
         <button onclick="search('non-smartphone')">検索</button>
@@ -180,6 +202,7 @@
 
     <h2>スマホの商品検索</h2>
     <div class="search-container">
+        <button class="paste-button" onclick="pasteContent('smartphoneInput')">📋</button>
         <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')">
         <div id="smartphoneSuggestions" class="suggestions"></div>
         <button onclick="search('smartphone')">検索</button>
@@ -317,145 +340,4 @@
                     </td>
                 </tr>
                 <tr>
-                    <td data-label="商品名">INSTAX mini Evo black</td>
-                    <td data-label="JANコード">
-                        <div class="copy-container">
-                            <span class="jan-code">4547410520088</span>
-                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-label="商品名">INSTAX mini Evo brown</td>
-                    <td data-label="JANコード">
-                        <div class="copy-container">
-                            <span class="jan-code">4547410520125</span>
-                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
-                        </div>
-                    </td>
-                </tr>
-                <tr>
-                    <td data-label="商品名">INSTAX WIDE 400</td>
-                    <td data-label="JANコード">
-                    <div class="copy-container">
-                        <span class="jan-code">4547410529975</span>
-                        <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-label="商品名">写ルンです シンプルエース 27枚撮り</td>
-                <td data-label="JANコード">
-                    <div class="copy-container">
-                        <span class="jan-code">4547410369137</span>
-                        <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-label="商品名">SX740 HS シルバー</td>
-                <td data-label="JANコード">
-                    <div class="copy-container">
-                        <span class="jan-code">4549292119060</span>
-                        <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-label="商品名">SX740 HS ブラック</td>
-                <td data-label="JANコード">
-                    <div class="copy-container">
-                        <span class="jan-code">4549292119008</span>
-                        <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
-                    </div>
-                </td>
-            </tr>
-            <tr>
-                <td data-label="商品名">Fire TV Stick 4K Max 第2世代</td>
-                <td data-label="JANコード">
-                    <div class="copy-container">
-                        <span class="jan-code">0840268944841</span>
-                        <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
-                    </div>
-                </td>
-            </tr>
-        </tbody>
-    </table>
-</div>
-
-<script>
-    var sites = [
-        {
-            name: '買取1丁目',
-            url: (query, type) => type === 'smartphone' 
-                ? `https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`
-                : `https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`
-        },
-        {
-            name: '海峡通信',
-            url: query => `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
-        },
-        {
-            name: '買取ルデヤ',
-            url: query => `https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`
-        },
-        {
-            name: '買取Wiki',
-            url: query => `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
-        },
-        {
-            name: '森森買取',
-            url: query => `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
-        }
-    ];
-
-   function search(type) {
-        var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
-        if (!query) return;
-
-        var searchLinksDiv = document.getElementById('searchLinks');
-        searchLinksDiv.innerHTML = ''; // Clear previous results
-
-        sites.forEach((site, index) => {
-            var link = document.createElement('a');
-            link.href = typeof site.url === 'function' ? site.url(query, type) : site.url;
-            link.target = '_blank';
-            link.textContent = `${site.name}で検索`;
-            link.className = 'search-link';
-            searchLinksDiv.appendChild(link);
-        });
-
-        // 矢印を表示
-        document.getElementById('arrowDown').style.display = 'block';
-
-        // スクロール位置を調整
-        setTimeout(() => {
-            const arrowElement = document.getElementById('arrowDown');
-            const arrowRect = arrowElement.getBoundingClientRect();
-            const scrollTarget = window.pageYOffset + arrowRect.top - 100;
-
-            window.scrollTo({
-                top: scrollTarget,
-                behavior: 'smooth'
-            });
-        }, 100);
-    }
-
-    function copyJANCode(button) {
-        var janCodeElement = button.previousElementSibling;
-        var range = document.createRange();
-        range.selectNode(janCodeElement);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        
-        try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'JANコードをコピーしました' : 'コピーに失敗しました';
-            alert(msg);
-        } catch (err) {
-            alert('コピーに失敗しました');
-        }
-
-        window.getSelection().removeAllRanges();
-    }
-</script>
+                    <td data-label
