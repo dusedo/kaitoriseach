@@ -226,94 +226,108 @@
                         </div>
                     </td>
                 </tr>
-                <!-- 他の商品エントリーは同様に続きます -->
-            </tbody>
-        </table>
-    </div>
-
-<script>
-    var sites = [
-        {
-            name: '買取1丁目',
-            url: (query, type) => type === 'smartphone' 
-                ? `https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`
-                : `https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`
-        },
-        {
-            name: '海峡通信',
-            url: query => `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
-        },
-        {
-            name: '買取ルデヤ',
-            url: query => `https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`
-        },
-        {
-            name: '買取Wiki',
-            url: query => `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
-        },
-        {
-            name: '森森買取',
-            url: query => `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
-        }
-    ];
-
-   function search(type) {
-        var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
-        if (!query) return;
-
-        var searchLinksDiv = document.getElementById('searchLinks');
-        searchLinksDiv.innerHTML = ''; // Clear previous results
-
-        sites.forEach((site, index) => {
-            var link = document.createElement('a');
-            link.href = typeof site.url === 'function' ? site.url(query, type) : site.url;
-            link.target = '_blank';
-            link.textContent = `${site.name}で検索`;
-            link.className = 'search-link';
-            searchLinksDiv.appendChild(link);
-        });
-
-        // 矢印を表示
-        document.getElementById('arrowDown').style.display = 'block';
-
-        // スクロール位置を調整
-        setTimeout(() => {
-            const arrowElement = document.getElementById('arrowDown');
-            const arrowRect = arrowElement.getBoundingClientRect();
-            const scrollTarget = window.pageYOffset + arrowRect.top - 100;
-
-            window.scrollTo({
-                top: scrollTarget,
-                behavior: 'smooth'
-            });
-        }, 100);
-    }
-
-    function copyJANCode(button) {
-        var janCodeElement = button.previousElementSibling;
-        var textArea = document.createElement("textarea");
-        textArea.value = janCodeElement.textContent;
-        document.body.appendChild(textArea);
-        textArea.select();
-        try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'JANコードをコピーしました' : 'コピーに失敗しました';
-            alert(msg);
-        } catch (err) {
-            alert('コピーに失敗しました');
-        }
-        document.body.removeChild(textArea);
-    }
-
-    async function pasteContent(inputId) {
-        try {
-            const text = await navigator.clipboard.readText();
-            document.getElementById(inputId).value = text;
-        } catch (err) {
-            console.error('Failed to read clipboard contents: ', err);
-            alert('クリップボードの読み取りに失敗しました。権限が許可されているか確認してください。');
-        }
-    }
-</script>
-</body>
-</html>
+                <tr>
+                    <td data-label="商品名">PlayStation 5 デジタル</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4948872415910</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">Nintendo Switch (有機ELモデル) [ホワイト]</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4902370548495</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">Nintendo Switch (有機ELモデル) [ネオン]</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4902370548501</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">Xbox Series X</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4549576161617</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">Xbox Series S</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4549576167718</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">リモートプレーヤー</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4948872017084</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">It Takes Two</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4938833024404</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">チェキ専用フィルム 2パック</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4547410377231</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">チェキ専用フィルム 1パック</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4547410377224</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">INSTAX mini 12 ブロッサムピンク</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4547410489125</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">INSTAX mini 40</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4547410449341</span>
+                            <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
+                        </div>
+                    </td>
+                </tr>
+                <tr>
+                    <td data-label="商品名">INSTAX mini Evo black</td>
+                    <td data-label="JANコード">
+                        <div class="copy-container">
+                            <span class="jan-code">4547410520088</span>
+                            <button class="copy-button" onclick="copyJANCode(this)
