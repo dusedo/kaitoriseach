@@ -411,22 +411,22 @@
         {
             name: '買取商店',
             url: (query) => {
+                // 買取商店のページに移動する
                 const searchUrl = `https://www.kaitorishouten-co.jp/products/list/keyword`;
                 window.location.href = searchUrl;
     
-                // 検索ボックスに入力されたキーワードを挿入する
+                // ページに移動後、1秒待ってから検索フォームに値を入力し、POSTリクエストを送信する
                 setTimeout(() => {
-                    const searchInput = document.querySelector('input[name="keyword"]');
-                    if (searchInput) {
-                        searchInput.value = query;
+                    const searchInput = document.querySelector('input[name="name"]');
+                    const searchButton = document.querySelector('button[type="button"]');
     
-                        // 検索ボタンをクリックする
-                        const searchButton = document.querySelector('button[type="submit"]');
-                        if (searchButton) {
-                            searchButton.click();
-                        }
+                    if (searchInput && searchButton) {
+                        searchInput.value = query;  // 検索ボックスにキーワードを入力
+    
+                        // 検索ボタンをクリックして検索を実行
+                        searchButton.click();
                     }
-                }, 1000);  // ページが読み込まれるまで1秒待つ
+                }, 1000);  // ページが読み込まれるまで1秒待機
             }
         },
         {
