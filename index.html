@@ -409,7 +409,24 @@
         },
         {
             name: '買取商店',
-            url: (query) => `https://www.kaitorishouten-co.jp/products/list/keyword?name=${encodeURIComponent(query)}&category_id=7`
+            url: (query) => {
+                const searchUrl = `https://www.kaitorishouten-co.jp/products/list/keyword`;
+                window.location.href = searchUrl;
+    
+                // 検索ボックスに入力されたキーワードを挿入する
+                setTimeout(() => {
+                    const searchInput = document.querySelector('input[name="keyword"]');
+                    if (searchInput) {
+                        searchInput.value = query;
+    
+                        // 検索ボタンをクリックする
+                        const searchButton = document.querySelector('button[type="submit"]');
+                        if (searchButton) {
+                            searchButton.click();
+                        }
+                    }
+                }, 1000);  // ページが読み込まれるまで1秒待つ
+            }
         },
         {
             name: '海峡通信',
