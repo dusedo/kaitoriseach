@@ -163,30 +163,23 @@
                 margin-top: 5px;
             }
         }
-         .copy-message {
+        .copy-message {
             position: fixed;
             top: 20px;
             left: 50%;
             transform: translateX(-50%);
-            background-color: #f0f0f0;
-            color: black;
+            background-color: #4CAF50;
+            color: white;
             padding: 10px;
             border-radius: 5px;
             display: none;
             z-index: 1000;
         }
         .paste-button {
-            margin-right: 5px;
-            background-color: #FFA500; /* オレンジ色 */
-            width: 10%; /* 幅を半分に */
+            margin-right: 10px;
+            background-color: #2196F3;
         }
-        button {
-            width: 10%; /* 検索ボタンの幅も半分に */
-        }
-        input[type="text"] {
-            width: 70%; /* 入力欄の幅を調整 */
-        }
-    </style>
+</style>
 </head>
 <body>
     <h1>買取サイト同時検索ツール</h1>
@@ -194,17 +187,15 @@
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
-        <button class="paste-button" onclick="pasteFromClipboard('nonSmartphoneInput')">ペースト</button>
+        <button class="paste-button" onclick="pasteFromClipboard()">ペースト</button>
         <button onclick="search('non-smartphone')">検索</button>
-        <div id="nonSmartphoneSuggestions" class="suggestions"></div>
     </div>
-    
+
     <h2>スマホの商品検索</h2>
     <div class="search-container">
         <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')">
-        <button class="paste-button" onclick="pasteFromClipboard('smartphoneInput')">ペースト</button>
-        <button onclick="search('smartphone')">検索</button>
         <div id="smartphoneSuggestions" class="suggestions"></div>
+        <button onclick="search('smartphone')">検索</button>
     </div>
 
     <div id="arrowDown" class="arrow-down">↓</div>
@@ -213,11 +204,9 @@
 
     <p class="text-standard">不具合がありましたら D  <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
     <br>
-    <p class="text-standard">最終更新日時： 2024年9月7日</p>
+    <p class="text-standard">最終更新日時： 2024年9月1日</p>
     <p class="text-standard">2024年8月28日更新内容：（スマホ環境）検索窓の幅を狭め、入力後に拡大せず検索ボタンを押せるように修正しました。プレステ5などキーワードで検索しづらい商品があったので、JANリストを追加しました　</p>
-    <p class="text-standard">2024年9月1日更新内容：JANリストのJANを手動コピーするのが手間だったのでワンタップでコピーできるようにしました</p>
-    <p class="text-standard">2024年9月7日更新内容：コピー後のポップアップが自動で消えるよう調整しました。ペーストボタンを追加しました。買取商店を追加しました</p>
-
+    <p class="text-standard">2024年9月1日更新内容：JANリストのJANを手動コピーするのが手間だったのでワンタップでコピーできるようにしました。デザインの乱れは近日中に修正します</p>
     <br>
     <p class="text-standard">対象店舗: 買取1丁目、買取商店、海峡通信、買取ルデヤ、買取Wiki、森森買取</p>
     <br>
@@ -495,30 +484,23 @@
         message.style.display = 'block';
         setTimeout(() => {
             message.style.display = 'none';
-        }, 2000); // 2秒に変更
+        }, 1000);
     }
-
-    function pasteFromClipboard(inputId) {
+    
+    function pasteFromClipboard() {
         if (navigator.clipboard && navigator.clipboard.readText) {
             navigator.clipboard.readText()
                 .then(text => {
-                    document.getElementById(inputId).value = text;
+                    document.getElementById('nonSmartphoneInput').value = text;
                 })
                 .catch(err => {
                     console.error('クリップボードの読み取りに失敗しました', err);
-                    focusAndSelectInput(inputId);
                 });
         } else {
             console.warn('クリップボードAPIがサポートされていません');
-            focusAndSelectInput(inputId);
+            // 代替手段: ユーザーに手動でペーストを促す
+            alert('お使いのブラウザではペースト機能がサポートされていません。手動でペーストしてください。');
         }
-    }
-
-    function focusAndSelectInput(inputId) {
-        var input = document.getElementById(inputId);
-        input.focus();
-        input.select();
-        input.setSelectionRange(0, 9999);
     }
 
     // showSuggestions と filterSuggestions 関数はそのまま維持
