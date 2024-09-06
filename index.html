@@ -494,18 +494,19 @@
         // ページの読み込みが完了していることを確認するため少し待機
         setTimeout(() => {
             const searchInput = document.querySelector('input[name="name"]'); // 検索ボックスの選択
+            const searchForm = document.querySelector('#product_search_form'); // 検索フォームの選択
             const searchButton = document.querySelector('.ec-headerSearch__keywordBtn'); // 検索ボタンの選択
     
-            if (searchInput && searchButton) {
+            if (searchInput && searchForm && searchButton) {
                 searchInput.value = query;  // 検索ボックスにキーワードを入力
                 console.log("検索キーワードを入力:", query);
     
-                // 検索ボタンをクリック
-                searchButton.click();  // 検索を実行
+                // フォームの送信を実行
+                searchForm.submit();  // 検索ボタンの代わりにフォームを直接送信
             } else {
-                console.error("検索ボックスまたは検索ボタンが見つかりません");
+                console.error("検索ボックスまたは検索フォームが見つかりません");
             }
-        }, 1000);  // ページ読み込み後に1秒待機
+        }, 1500);  // ページ読み込み後に1.5秒待機
     }
     
     function showCopyMessage() {
