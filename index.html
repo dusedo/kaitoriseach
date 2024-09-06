@@ -380,86 +380,84 @@
 </div>
 
 <script>
-        var sites = [
-            {
-                name: '買取1丁目',
-                url: (query, type) => type === 'smartphone' 
-                    ? `https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`
-                    : `https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`
-            },
-            {
-                name: '買取商店',
-                url: 'https://www.kaitorishouten-co.jp/products/list/keyword',
-                special: true
-            },
-            {
-                name: '海峡通信',
-                url: query => `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
-            },
-            {
-                name: '買取ルデヤ',
-                url: query => `https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`
-            },
-            {
-                name: '買取Wiki',
-                url: query => `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
-            },
-            {
-                name: '森森買取',
-                url: query => `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
-            }
-        ];
+    var sites = [
+        {
+            name: '買取1丁目',
+            url: (query, type) => type === 'smartphone' 
+                ? `https://www.1-chome.com/keitai/search/${encodeURIComponent(query)}`
+                : `https://www.1-chome.com/elec/search/${encodeURIComponent(query)}`
+        },
+        {
+            name: '買取商店',
+            url: (query) => `https://www.kaitorishouten-co.jp/products/list/keyword?name=${encodeURIComponent(query)}&category_id=7`
+        },
+        {
+            name: '海峡通信',
+            url: query => `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
+        },
+        {
+            name: '買取ルデヤ',
+            url: query => `https://kaitori-rudeya.com/search/index/${encodeURIComponent(query)}/-`
+        },
+        {
+            name: '買取Wiki',
+            url: query => `https://gamekaitori.jp/search?type=&q=${encodeURIComponent(query)}#searchtop`
+        },
+        {
+            name: '森森買取',
+            url: query => `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
+        }
+    ];
 
-        function search(type) {
-            var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
-            if (!query) return;
+    function search(type) {
+        var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
+        if (!query) return;
 
-            var searchLinksDiv = document.getElementById('searchLinks');
-            searchLinksDiv.innerHTML = ''; // Clear previous results
+        var searchLinksDiv = document.getElementById('searchLinks');
+        searchLinksDiv.innerHTML = ''; // Clear previous results
 
-            sites.forEach((site, index) => {
-                var link = document.createElement('a');
-                if (site.special) {
-                    link.href = site.url(query);
-                    link.target = '_blank';
-                    link.onclick = function(e) {
-                        e.preventDefault();
-                        var searchWindow = window.open(this.href, '_blank');
-                        searchWindow.onload = function() {
-                            searchWindow.postMessage({ type: 'PERFORM_SEARCH', query: query }, '*');
-                        };
-                    };
-                } else {
-                    link.href = typeof site.url === 'function' ? site.url(query, type) : site.url;
-                    link.target = '_blank';
-                }
-                link.textContent = `${site.name}で検索`;
-                link.className = 'search-link';
-                searchLinksDiv.appendChild(link);
-            });
+        sites.forEach((site, index) => {
+            var link = document.createElement('a');
+            link.href = typeof site.url === 'function' ? site.url(query, type) : site.url;
+            link.target = '_blank';
+            link.textContent = `${site.name}で検索`;
+            link.className = 'search-link';
+            searchLinksDiv.appendChild(link);
+        });
 
         // 矢印を表示
-            document.getElementById('arrowDown').style.display = 'block';
+        document.getElementById('arrowDown').style.display = 'block';
 
-            // スクロール位置を調整
-            setTimeout(() => {
-                const arrowElement = document.getElementById('arrowDown');
-                const arrowRect = arrowElement.getBoundingClientRect();
-                const scrollTarget = window.pageYOffset + arrowRect.top - 100;
+        // スクロール位置を調整
+        setTimeout(() => {
+            const arrowElement = document.getElementById('arrowDown');
+            const arrowRect = arrowElement.getBoundingClientRect();
+            const scrollTarget = window.pageYOffset + arrowRect.top - 100;
 
-                window.scrollTo({
-                    top: scrollTarget,
-                    behavior: 'smooth'
-                });
-            }, 100);
+            window.scrollTo({
+                top: scrollTarget,
+                behavior: 'smooth'
+            });
+        }, 100);
+    }
+
+    function copyJANCode(button) {
+        var janCodeElement = button.previousElementSibling;
+        var range = document.createRange();
+        range.selectNode(janCodeElement);
+        window.getSelection().removeAllRanges();
+        window.getSelection().addRange(range);
+        
+        try {
+            var successful = document.execCommand('copy');
+            var msg = successful ? 'JANコードをコピーしました' : 'コピーに失敗しました';
+            alert(msg);
+        } catch (err) {
+            alert('コピーに失敗しました');
         }
 
-        function copyJANCode(button) {
-            // 既存のコード
-        }
+        window.getSelection().removeAllRanges();
+    }
 
-        // showSuggestions と filterSuggestions 関数をここに追加する必要があります
-    </script>
-</body>
-</html>
-```
+    // showSuggestions と filterSuggestions 関数はそのまま維持
+</script>
