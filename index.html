@@ -176,8 +176,9 @@
             z-index: 1000;
         }
         .paste-button {
-            margin-right: 10px;
-            background-color: #2196F3;
+            margin-right: 5px;
+            background-color: #FFA500; /* オレンジ色 */
+            width: 20%; /* 幅を半分に */
         }
 </style>
 </head>
@@ -187,14 +188,14 @@
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
-        <button class="paste-button" onclick="pasteFromClipboard()">ペースト</button>
+        <button class="paste-button" onclick="pasteFromClipboard('nonSmartphoneInput')">ペースト</button>
         <button onclick="search('non-smartphone')">検索</button>
     </div>
 
     <h2>スマホの商品検索</h2>
     <div class="search-container">
         <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')">
-        <div id="smartphoneSuggestions" class="suggestions"></div>
+        <button class="paste-button" onclick="pasteFromClipboard('smartphoneInput')">ペースト</button>
         <button onclick="search('smartphone')">検索</button>
     </div>
 
