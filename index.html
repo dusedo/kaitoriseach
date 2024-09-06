@@ -411,17 +411,21 @@
         {
             name: '買取商店',
             url: (query) => {
-                // 検索フォームがあることを確認し、検索ボックスにキーワードを入力する
+                // ページが完全に読み込まれてから処理を実行
                 setTimeout(() => {
                     const searchInput = document.querySelector('input[name="name"]'); // 検索ボックスの選択
+                    const searchForm = document.querySelector('#product_search_form'); // 検索フォームの選択
                     const searchButton = document.querySelector('.ec-headerSearch__keywordBtn'); // 検索ボタンの選択
     
-                    if (searchInput && searchButton) {
+                    if (searchInput && searchForm && searchButton) {
                         searchInput.value = query;  // 検索ボックスにキーワードを入力
                         console.log("検索キーワードを入力:", query);
-                        
-                        // 検索ボタンをクリックして検索を実行
-                        searchButton.click();
+    
+                        // フォームの action 属性を手動で設定（例: 買取商店の検索エンドポイント）
+                        searchForm.action = "https://www.kaitorishouten-co.jp/products/list/keyword";
+    
+                        // フォームの送信を実行
+                        searchForm.submit();  // 検索ボタンの代わりにフォームを直接送信
                     }
                 }, 1500);  // ページ読み込み後に1.5秒待機
             }
