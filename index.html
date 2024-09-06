@@ -421,11 +421,11 @@
                         searchInput.value = query;  // 検索ボックスにキーワードを入力
                         console.log("検索キーワードを入力:", query);
     
-                        // フォームの action 属性を手動で設定（例: 買取商店の検索エンドポイント）
+                        // フォームの action 属性を明示的に設定
                         searchForm.action = "https://www.kaitorishouten-co.jp/products/list/keyword";
-    
-                        // フォームの送信を実行
-                        searchForm.submit();  // 検索ボタンの代わりにフォームを直接送信
+                        
+                        // 検索ボタンをクリック
+                        searchButton.click();
                     }
                 }, 1500);  // ページ読み込み後に1.5秒待機
             }
