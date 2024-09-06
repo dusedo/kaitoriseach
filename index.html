@@ -411,9 +411,11 @@
         {
             name: '買取商店',
             url: (query) => {
-                // 買取商店のページで直接フォームを操作して検索を実行
+                // リンクを生成せず、フォーム操作で検索を実行
                 searchInKaitoriShouten(query);  // 先ほどの検索処理を実行
+                return '#';  // 仮のURLを返しておく
             }
+
         },
         {
             name: '海峡通信',
@@ -442,15 +444,17 @@
     
         sites.forEach((site, index) => {
             if (site.name === '買取商店') {
-                site.url(query);  // 買取商店の場合はフォーム操作で検索を実行
-            } else {
-                var link = document.createElement('a');
-                link.href = typeof site.url === 'function' ? site.url(query, type) : site.url;
-                link.target = '_blank';
-                link.textContent = `${site.name}で検索`;
-                link.className = 'search-link';
-                searchLinksDiv.appendChild(link);
-            }
+            // 買取商店だけ特別にフォーム送信を実行
+            site.url(query);  // 検索フォーム操作で実行
+        } else {
+            var link = document.createElement('a');
+            link.href = typeof site.url === 'function' ? site.url(query, type) : site.url;
+            link.target = '_blank';
+            link.textContent = `${site.name}で検索`;
+            link.className = 'search-link';
+            searchLinksDiv.appendChild(link);
+        }
+
         });
 
         // 矢印を表示
