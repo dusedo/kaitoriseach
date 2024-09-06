@@ -169,11 +169,13 @@
             left: 50%;
             transform: translateX(-50%);
             background-color: #f0f0f0;
-            color: white;
+            color: black !important;
             padding: 10px;
             border-radius: 5px;
             display: none;
             z-index: 1000;
+            max-width: 30%;  /* 画面幅の90%まで広がる */
+            min-width: 200px; /* 最低幅300px */
         }
         .paste-button {
             margin-right: 5px;
