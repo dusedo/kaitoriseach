@@ -163,7 +163,23 @@
                 margin-top: 5px;
             }
         }
-    </style>
+        .copy-message {
+            position: fixed;
+            top: 20px;
+            left: 50%;
+            transform: translateX(-50%);
+            background-color: #4CAF50;
+            color: white;
+            padding: 10px;
+            border-radius: 5px;
+            display: none;
+            z-index: 1000;
+        }
+        .paste-button {
+            margin-right: 10px;
+            background-color: #2196F3;
+        }
+</style>
 </head>
 <body>
     <h1>買取サイト同時検索ツール</h1>
@@ -171,7 +187,7 @@
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
         <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
-        <div id="nonSmartphoneSuggestions" class="suggestions"></div>
+        <button class="paste-button" onclick="pasteFromClipboard()">ペースト</button>
         <button onclick="search('non-smartphone')">検索</button>
     </div>
 
@@ -375,6 +391,7 @@
                     </div>
                 </td>
             </tr>
+                <div id="copyMessage" class="copy-message">コピーしました</div>
         </tbody>
     </table>
 </div>
@@ -442,21 +459,48 @@
     }
 
     function copyJANCode(button) {
-        var janCodeElement = button.previousElementSibling;
-        var range = document.createRange();
-        range.selectNode(janCodeElement);
-        window.getSelection().removeAllRanges();
-        window.getSelection().addRange(range);
-        
-        try {
-            var successful = document.execCommand('copy');
-            var msg = successful ? 'JANコードをコピーしました' : 'コピーに失敗しました';
-            alert(msg);
-        } catch (err) {
-            alert('コピーに失敗しました');
+    var janCodeElement = button.previousElementSibling;
+    var range = document.createRange();
+    range.selectNode(janCodeElement);
+    window.getSelection().removeAllRanges();
+    window.getSelection().addRange(range);
+    
+    try {
+        var successful = document.execCommand('copy');
+        if (successful) {
+            showCopyMessage();
+        } else {
+            console.error('コピーに失敗しました');
         }
+    } catch (err) {
+        console.error('コピーに失敗しました', err);
+    }
 
-        window.getSelection().removeAllRanges();
+    window.getSelection().removeAllRanges();
+    }
+    
+    function showCopyMessage() {
+        var message = document.getElementById('copyMessage');
+        message.style.display = 'block';
+        setTimeout(() => {
+            message.style.display = 'none';
+        }, 1000);
+    }
+    
+    function pasteFromClipboard() {
+        if (navigator.clipboard && navigator.clipboard.readText) {
+            navigator.clipboard.readText()
+                .then(text => {
+                    document.getElementById('nonSmartphoneInput').value = text;
+                })
+                .catch(err => {
+                    console.error('クリップボードの読み取りに失敗しました', err);
+                });
+        } else {
+            console.warn('クリップボードAPIがサポートされていません');
+            // 代替手段: ユーザーに手動でペーストを促す
+            alert('お使いのブラウザではペースト機能がサポートされていません。手動でペーストしてください。');
+        }
     }
 
     // showSuggestions と filterSuggestions 関数はそのまま維持
