@@ -186,18 +186,18 @@
 </style>
 </head>
 <body>
-    <h1>買取サイト同時検索ツール</h1>
+    <h1>買取サイト検索ツール</h1>
     
     <h2>スマホ以外の商品検索</h2>
     <div class="search-container">
-        <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力" onfocus="showSuggestions('nonSmartphoneInput')" oninput="filterSuggestions('nonSmartphoneInput')">
+        <input type="text" id="nonSmartphoneInput" placeholder="商品名またはJANを入力">
         <button class="paste-button" onclick="pasteFromClipboard('nonSmartphoneInput')">ペースト</button>
         <button onclick="search('non-smartphone')">検索</button>
     </div>
 
     <h2>スマホの商品検索</h2>
     <div class="search-container">
-        <input type="text" id="smartphoneInput" placeholder="商品名を入力" onfocus="showSuggestions('smartphoneInput')" oninput="filterSuggestions('smartphoneInput')">
+        <input type="text" id="smartphoneInput" placeholder="商品名を入力">
         <button class="paste-button" onclick="pasteFromClipboard('smartphoneInput')">ペースト</button>
         <button onclick="search('smartphone')">検索</button>
     </div>
@@ -521,18 +521,17 @@
         }, 2000); // 2秒に変更
     }
     
-    function pasteFromClipboard() {
+    function pasteFromClipboard(inputId) {
         if (navigator.clipboard && navigator.clipboard.readText) {
             navigator.clipboard.readText()
                 .then(text => {
-                    document.getElementById('nonSmartphoneInput').value = text;
+                    document.getElementById(inputId).value = text;
                 })
                 .catch(err => {
                     console.error('クリップボードの読み取りに失敗しました', err);
                 });
         } else {
             console.warn('クリップボードAPIがサポートされていません');
-            // 代替手段: ユーザーに手動でペーストを促す
             alert('お使いのブラウザではペースト機能がサポートされていません。手動でペーストしてください。');
         }
     }
