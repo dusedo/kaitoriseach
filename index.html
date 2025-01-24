@@ -431,20 +431,11 @@
         {
             name: '海峡通信',
             url: query => {
-                const executeSearch = () => {
-                    // 検索窓が表示されるまで待機
-                    setTimeout(() => {
-                        const searchInput = document.querySelector('input[type="search"][placeholder="JAN・商品名で検索"]');
-                        const searchButton = document.querySelector('button#G01Searchbtn');
-                        
-                        if (searchInput && searchButton) {
-                            searchInput.value = query;
-                            searchButton.click();
-                        }
-                    }, 1000);  // 1秒待機
+                const newWindow = window.open('https://www.mobile-ichiban.com/', '_blank');
+                newWindow.onload = () => {
+                    newWindow.document.querySelector('input[placeholder="JAN・商品名で検索"]').value = query;
+                    newWindow.document.querySelector('#G01Searchbtn').click();
                 };
-                
-                window.addEventListener('load', executeSearch);
                 return 'https://www.mobile-ichiban.com/';
             }
         },
