@@ -247,7 +247,7 @@
                 <td data-label="商品名">PS5 Pro アニバ特別セット</td>
                 <td data-label="JANコード">
                     <div class="copy-container">
-                        <span class="jan-code">特別セット</span>
+                        <span class="jan-code">4948872416580</span>
                         <button class="copy-button" onclick="copyJANCode(this)">Copy</button>
                     </div>
                 </td>
@@ -424,15 +424,24 @@
         {
             name: '買取商店',
             url: (query) => {
-                // リンクを生成せず、フォーム操作で検索を実行
-                searchInKaitoriShouten(query);  // 先ほどの検索処理を実行
-                return '#';  // 仮のURLを返しておく
+                searchInKaitoriShouten(query);
+                return '#';
             }
-
         },
         {
             name: '海峡通信',
-            url: query => `https://www.mobile-ichiban.com/Prod/0?Search=${encodeURIComponent(query)}`
+            url: query => {
+                const newWindow = window.open('https://www.mobile-ichiban.com/', '_blank');
+                newWindow.onload = () => {
+                    const searchInput = newWindow.document.getElementById('G01SearchIpt');
+                    const searchButton = newWindow.document.getElementById('G01Searchbtn');
+                    if (searchInput && searchButton) {
+                        searchInput.value = query;
+                        searchButton.click();
+                    }
+                };
+                return 'https://www.mobile-ichiban.com/';
+            }
         },
         {
             name: '買取ルデヤ',
@@ -447,7 +456,6 @@
             url: query => `https://www.morimori-kaitori.jp/search/${encodeURIComponent(query)}?sk=${encodeURIComponent(query)}`
         }
     ];
-
     function search(type) {
         var query = document.getElementById(type === 'smartphone' ? 'smartphoneInput' : 'nonSmartphoneInput').value;
         if (!query) return;
