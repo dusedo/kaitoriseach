@@ -209,8 +209,8 @@
     <br>
     <p class="text-standard">不具合がありましたら D  <a href="https://x.com/du_sedo" target="_blank">https://x.com/du_sedo</a> までお問い合わせください</p>
     <br>
-    <p class="text-standard">最終更新日時： 2024年9月7日</p>
-    <p class="text-standard">2024年9月7日更新内容：ペーストボタンを追加。コピーボタンを押した後のポップアップが自動で消えるよう調整</p>
+    <p class="text-standard">最終更新日時： 2025年1月24日</p>
+    <p class="text-standard">2025年1月24日更新内容：海峡通信のサイト構造変更に対応</p>
     <br>
     <p class="text-standard">対象店舗: 買取1丁目、海峡通信、買取ルデヤ、買取Wiki、森森買取</p>
     <br>
@@ -431,19 +431,21 @@
         {
             name: '海峡通信',
             url: query => {
-                const baseUrl = 'https://www.mobile-ichiban.com/';
-                // リンククリック時に実行される処理
                 const executeSearch = () => {
-                    const searchInput = document.getElementById('G01SearchIpt');
-                    const searchButton = document.getElementById('G01Searchbtn');
-                    if (searchInput && searchButton) {
-                        searchInput.value = query;
-                        searchButton.click();
-                    }
+                    // 検索窓が表示されるまで待機
+                    setTimeout(() => {
+                        const searchInput = document.querySelector('input[type="search"][placeholder="JAN・商品名で検索"]');
+                        const searchButton = document.querySelector('button#G01Searchbtn');
+                        
+                        if (searchInput && searchButton) {
+                            searchInput.value = query;
+                            searchButton.click();
+                        }
+                    }, 1000);  // 1秒待機
                 };
                 
                 window.addEventListener('load', executeSearch);
-                return baseUrl;
+                return 'https://www.mobile-ichiban.com/';
             }
         },
         {
